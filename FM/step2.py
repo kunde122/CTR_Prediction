@@ -87,6 +87,7 @@ for field in direct_encoding_fields:
     for value in list(field_sets):
         field_dict[value] = ind
         ind += 1
+
     with open('dicts/'+field+'.pkl', 'wb') as f:
         pickle.dump(field_dict, f)
 

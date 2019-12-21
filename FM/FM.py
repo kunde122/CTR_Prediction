@@ -5,7 +5,7 @@ curPath = os.path.abspath(os.path.dirname(__file__))
 rootPath = os.path.split(curPath)[0]
 sys.path.append(rootPath)
 import tensorflow as tf
-from FM.utilities import *
+from utilities import *
 import logging
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',level=logging.INFO)
 import numpy as np
@@ -45,12 +45,13 @@ class FM(object):
             w1 = tf.get_variable('w1', shape=[self.p, 2],
                                  initializer=tf.truncated_normal_initializer(mean=0,stddev=1e-2))
             # shape of [None, 2]
-            self.linear_terms = tf.add(tf.sparse_tensor_dense_matmul  (self.X, w1), b)
+            self.linear_terms = tf.add(tf.sparse_tensor_dense_matmul(self.X, w1), b)
+            #Xw1+b->[2]
 
         with tf.variable_scope('interaction_layer'):
             v = tf.get_variable('v', shape=[self.p, self.k],
                                 initializer=tf.truncated_normal_initializer(mean=0, stddev=0.01))
-            # shape of [None, 1]
+            # shape of [None, 1] 交叉项 tf.pow作用于各个分量
             self.interaction_terms = tf.multiply(0.5,
                                                  tf.reduce_mean(
                                                      tf.subtract(
