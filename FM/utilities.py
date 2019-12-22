@@ -79,16 +79,20 @@ if __name__ == '__main__':
               'banner_pos', 'site_id' ,'site_domain', 'site_category', 'app_domain',
               'app_id', 'app_category', 'device_model', 'device_type', 'device_id',
               'device_conn_type']
+
     batch_size = 512
-    train = pd.read_csv('../avazu_CTR/train_frac_0.01.csv', chunksize=batch_size)
-    test = pd.read_csv('../avazu_CTR/test.csv', chunksize=batch_size)
+    # train = pd.read_csv('../avazu_CTR/train_frac_0.01.csv', chunksize=batch_size)
+    # test = pd.read_csv('../avazu_CTR/test.csv', chunksize=batch_size)
     # loading dicts
     fields_dict = {}
     for field in fields:
-        with open('dicts/'+field+'.pkl','rb') as f:
+        with open('D:/CTR_Prediction/FM/'+'dicts/'+field+'.pkl','rb') as f:
             fields_dict[field] = pickle.load(f)
 
-    test_sparse_data_generate(test, fields_dict)
+    # test_sparse_data_generate(test, fields_dict)
+    path = 'D:\\BaiduNetdiskDownload\\train_1m'
+    train = pd.read_csv(path, chunksize=10000)
+    train_sparse_data_generate(train, fields_dict)
 
 
 
