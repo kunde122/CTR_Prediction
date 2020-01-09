@@ -93,11 +93,14 @@ for field in direct_encoding_fields:
 
 for field in frequency_encoding_fields:
     # value to one-hot-encoding index dict
+    # 值->频数 字典
     field2count = eval(field)
     index_rare = None
+    #设置 值->id（频数小于10的，id=index_rare）
     for k,count in field2count.items():
         if count < 10:
             if index_rare == None:
+                #设置不常见值的id为index_rare
                 field_dict[k] = ind
                 index_rare = ind
                 ind += 1

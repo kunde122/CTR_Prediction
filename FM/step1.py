@@ -50,12 +50,26 @@ device_ip = dict()
 
 path='/Users/user/Downloads/avazu-ctr-prediction/train_1m'
 # train = pd.read_csv(path,nrows=1000000)
-# train.to_csv(path+'1m',index=False)
+# train = pd.read_csv(path,nrows=100000)
+# train.to_csv(path+'_10w',index=False)
 
 
 # train = pd.read_csv('/home/johnso/PycharmProjects/News_recommendation/CTR_prediction/avazu_CTR/train.csv',chunksize=10000)
 train = pd.read_csv(path,chunksize=10000)
 def directly():
+    #统计下面列中的不同元素，并保存
+    click = set()
+    # hour = set()
+    C1 = set()
+    banner_pos = set()
+    site_category = set()
+    app_category = set()
+    device_type = set()
+    device_conn_type = set()
+    C15 = set()
+    C16 = set()
+    C18 = set()
+    C20 = set()
     for data in train:
 
         click_v = set(data['click'].values)
@@ -129,6 +143,7 @@ def directly():
         pickle.dump(device_conn_type,f)
 
 def frequency():
+    #对每一列，计算出 值->频数字典，保存
     count = 0
     for data in train:
         C14_list = data['C14'].values
@@ -137,7 +152,7 @@ def frequency():
                 C14[k] += v
             else:
                 C14[k] = v
-
+        #C14 C14列的值->频数
         C17_list = data['C17'].values
         for k, v in Counter(C17_list).items():
             if k in C17.keys():
@@ -244,5 +259,6 @@ def frequency():
 
     with open('field2count/device_ip.pkl', 'wb') as f:
         pickle.dump(device_ip, f)
-
-frequency()
+# train_sparse_data_generate(path,)
+directly()
+# frequency()

@@ -2,7 +2,7 @@
 import pandas as pd
 import pickle
 import logging
-from scipy.sparse import coo_matrix
+# from scipy.sparse import coo_matrix
 logging.basicConfig(format='%(asctime)s : %(levelname)s : %(message)s',level=logging.INFO)
 
 
@@ -15,9 +15,11 @@ def one_hot_representation(sample, fields_dict, isample):
     :return: sample index
     """
     index = []
+    #[样本id,样本特征值->id]
     for field in fields_dict:
         # get index of array
         if field == 'hour':
+            #YYMMDDHH 最后两位表示小时
             field_value = int(str(sample[field])[-2:])
         else:
             field_value = sample[field]
@@ -31,6 +33,7 @@ def train_sparse_data_generate(train_data, fields_dict):
     # batch_index
     ibatch = 0
     for data in train_data:
+        #len(data)=10000
         labels = []
         indexes = []
         for i in range(len(data)):
@@ -86,11 +89,12 @@ if __name__ == '__main__':
     # loading dicts
     fields_dict = {}
     for field in fields:
-        with open('D:/CTR_Prediction/FM/'+'dicts/'+field+'.pkl','rb') as f:
+        with open('/Users/user/code/mycode/CTR_Prediction/FM/'+'dicts/'+field+'.pkl','rb') as f:
             fields_dict[field] = pickle.load(f)
 
     # test_sparse_data_generate(test, fields_dict)
     path = 'D:\\BaiduNetdiskDownload\\train_1m'
+    path = '/Users/user/Downloads/avazu-ctr-prediction/train_1m'
     train = pd.read_csv(path, chunksize=10000)
     train_sparse_data_generate(train, fields_dict)
 

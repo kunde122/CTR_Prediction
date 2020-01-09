@@ -105,9 +105,11 @@ def check_restore_parameters(sess, saver):
 def train_model(sess, model, epochs=10, print_every=50):
     """training model"""
     # Merge all the summaries and write them out to train_logs
+    path='/Users/user/Downloads/avazu-ctr-prediction/train_1m'
     merged = tf.summary.merge_all()
     train_writer = tf.summary.FileWriter('train_logs', sess.graph)
     # get sparse training data
+
     with open('../avazu_CTR/train_sparse_data_frac_0.01.pkl', 'rb') as f:
         sparse_data_fraction = pickle.load(f)
     # get number of batches
